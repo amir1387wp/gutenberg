@@ -35,12 +35,10 @@ import {
 	writeBlockFixtureSerializedHTML,
 } from '../fixtures';
 
-/* eslint-disable no-restricted-syntax */
 import * as form from '@wordpress/block-library/src/form';
 import * as formInput from '@wordpress/block-library/src/form-input';
 import * as formSubmitButton from '@wordpress/block-library/src/form-submit-button';
 import * as formSubmissionNotification from '@wordpress/block-library/src/form-submission-notification';
-/* eslint-enable no-restricted-syntax */
 
 const blockBasenames = getAvailableBlockFixturesBasenames();
 
