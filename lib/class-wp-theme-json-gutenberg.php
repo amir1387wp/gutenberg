@@ -233,6 +233,7 @@ class WP_Theme_JSON_Gutenberg {
 	 * @since 6.3.0 Added `writing-mode` property.
 	 * @since 6.6.0 Added `background-[image|position|repeat|size]` properties.
 	 * @since 7.0.0 Added `dimensions.width`.
+	 * @since 7.0.0 Added `text-indent` property.
 	 *
 	 * @var array
 	 */
@@ -390,6 +391,7 @@ class WP_Theme_JSON_Gutenberg {
 	 * @since 6.4.0 Added `lightbox`.
 	 * @since 7.0.0 Added type markers to the schema for boolean values.
 	 * @since 7.0.0 Added `dimensions.width`.
+	 * @since 7.0.0 Added `text-indent` property.
 	 * @var array
 	 */
 	const VALID_SETTINGS = array(
@@ -517,6 +519,7 @@ class WP_Theme_JSON_Gutenberg {
 	 * @since 6.2.0 Added `outline`, and `minHeight` properties.
 	 * @since 6.6.0 Added `background` sub properties to top-level only.
 	 * @since 6.6.0 Added `dimensions.aspectRatio`.
+	 * @since 7.0.0 Added `text-indent` property.
 	 * @var array
 	 */
 	const VALID_STYLES = array(
@@ -614,6 +617,7 @@ class WP_Theme_JSON_Gutenberg {
 	 *
 	 * @since 5.8.0
 	 * @since 6.1.0 Added `heading`, `button`, and `caption` elements.
+	 * @since 7.0.0 Added `text` property.
 	 * @var string[]
 	 */
 	const ELEMENTS = array(
