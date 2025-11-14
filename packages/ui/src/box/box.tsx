@@ -92,7 +92,7 @@ export const Box = forwardRef< HTMLDivElement, BoxProps >( function Box(
 	},
 	ref
 ) {
-	const style: React.CSSProperties = {};
+	const style: React.CSSProperties = { ...props.style };
 
 	if ( bg ) {
 		style.backgroundColor = `var(--wpds-color-bg-${ target }-${ bg }, var(--wpds-color-bg-surface-${ bg }))`;
@@ -109,5 +109,9 @@ export const Box = forwardRef< HTMLDivElement, BoxProps >( function Box(
 		);
 	}
 
-	return renderElement< 'div' >( render, { style, ...props }, ref );
+	return renderElement< 'div' >( {
+		render,
+		ref,
+		props: { ...props, style },
+	} );
 } );
