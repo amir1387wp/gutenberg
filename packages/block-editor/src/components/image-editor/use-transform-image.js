@@ -16,7 +16,7 @@ export default function useTransformImage( {
 
 	const setZoom = useCallback(
 		( newZoom ) => {
-			setCropperState( { zoom: newZoom / 100 } );
+			setCropperState( { zoom: newZoom } );
 		},
 		[ setCropperState ]
 	);
