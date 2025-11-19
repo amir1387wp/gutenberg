@@ -16,7 +16,7 @@ export default function useTransformImage( {
 
 	const setZoom = useCallback(
 		( newZoom ) => {
-			setCropperState( { zoom: newZoom } );
+			setCropperState( { zoom: newZoom / 100 } );
 		},
 		[ setCropperState ]
 	);
@@ -49,7 +49,7 @@ export default function useTransformImage( {
 		let naturalAspectRatio = defaultAspect;
 		const isDefaultAspect =
 			defaultAspect === aspectRatio || rotatedAspect === aspectRatio;
-		const isZoomed = zoom !== 1;
+		const shouldResetAspect = zoom !== 1 || ! isDefaultAspect;
 
 		if ( iternalRotation % 180 === 90 ) {
 			naturalAspectRatio = 1 / defaultAspect;
@@ -58,8 +58,9 @@ export default function useTransformImage( {
 		if ( angle === 0 ) {
 			setEditedUrl();
 			setInternalRotation( angle );
-			const newAspectRatio =
-				isZoomed || ! isDefaultAspect ? aspectRatio : defaultAspect;
+			const newAspectRatio = shouldResetAspect
+				? aspectRatio
+				: defaultAspect;
 			setCropperState( {
 				aspectRatio: newAspectRatio,
 				crop: {
@@ -101,10 +102,9 @@ export default function useTransformImage( {
 			canvas.toBlob( ( blob ) => {
 				setEditedUrl( URL.createObjectURL( blob ) );
 				setInternalRotation( angle );
-				const newAspectRatio =
-					isZoomed || ! isDefaultAspect
-						? aspectRatio
-						: canvas.width / canvas.height;
+				const newAspectRatio = shouldResetAspect
+					? aspectRatio
+					: canvas.width / canvas.height;
 				setCropperState( {
 					aspectRatio: newAspectRatio,
 					crop: {
