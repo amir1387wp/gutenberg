@@ -12,7 +12,7 @@ export default function useTransformImage( {
 } ) {
 	const [ editedUrl, setEditedUrl ] = useState();
 	const { cropperState, setCropperState } = useImageCropper();
-	const { zoom, aspectRatio, crop } = cropperState;
+	const { zoom, aspectRatio, crop, croppedArea } = cropperState;
 
 	const setZoom = useCallback(
 		( newZoom ) => {
@@ -143,7 +143,7 @@ export default function useTransformImage( {
 		() => ( {
 			editedUrl,
 			setEditedUrl,
-			crop,
+			crop: croppedArea,
 			zoom,
 			setZoom,
 			rotation: iternalRotation,
@@ -154,7 +154,7 @@ export default function useTransformImage( {
 		} ),
 		[
 			editedUrl,
-			crop,
+			croppedArea,
 			zoom,
 			setZoom,
 			iternalRotation,
