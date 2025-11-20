@@ -101,17 +101,65 @@ function UnforwardedControlWithError< C extends React.ReactElement >(
 	>();
 	const [ isTouched, setIsTouched ] = useState( false );
 	const previousCustomValidityType = usePrevious( customValidity?.type );
+	const className = 'components-validated-control';
 
-	// Ensure that error messages are visible after user attemps to submit a form
-	// with multiple invalid fields.
 	useEffect( () => {
 		const validityTarget = getValidityTarget();
+
+		// Ensure that error messages are visible after user attemps to submit a form
+		// with multiple invalid fields.
 		const showValidationMessage = () =>
 			setErrorMessage( validityTarget?.validationMessage );
+
+		// Suppress the native error popover, while keeping the focus behavior intact.
+		const supressNativePopover = ( event: Event ) => {
+			event.preventDefault();
+
+			const target = event.target as ValidityTarget;
+
+			if ( ! target.form ) {
+				target.focus();
+				return;
+			}
+
+			const firstErrorInForm = Array.from( target.form.elements ).find(
+				( el ) => ! ( el as ValidityTarget ).validity.valid
+			);
+
+			if ( firstErrorInForm === target ) {
+				target.focus();
+			}
+		};
+
+		// Radio inputs need special handling because all radio inputs with the
+		// same `name` will be marked as invalid.
+		const radioSibilings =
+			validityTarget?.type === 'radio' && validityTarget?.name
+				? Array.from(
+						validityTarget
+							?.closest( `.${ className }` )
+							?.querySelectorAll< HTMLInputElement >(
+								`input[type="radio"][name="${ validityTarget?.name }"]`
+							) ?? []
+				  ).filter( ( sibling ) => sibling !== validityTarget )
+				: [];
+
+		validityTarget?.addEventListener( 'invalid', supressNativePopover );
+		radioSibilings.forEach( ( sibling ) =>
+			sibling.addEventListener( 'invalid', supressNativePopover )
+		);
 
 		validityTarget?.addEventListener( 'invalid', showValidationMessage );
 
 		return () => {
+			validityTarget?.removeEventListener(
+				'invalid',
+				supressNativePopover
+			);
+			radioSibilings.forEach( ( sibling ) =>
+				sibling.removeEventListener( 'invalid', supressNativePopover )
+			);
+
 			validityTarget?.removeEventListener(
 				'invalid',
 				showValidationMessage
@@ -220,7 +268,7 @@ function UnforwardedControlWithError< C extends React.ReactElement >(
 		// Disable reason: Just listening to a bubbled event, not for interaction.
 		// eslint-disable-next-line jsx-a11y/no-static-element-interactions
 		<div
-			className="components-validated-control"
+			className={ className }
 			ref={ forwardedRef }
 			onBlur={ onBlur }
 			onKeyDown={ withIgnoreIMEEvents( onKeyDown ) }
