@@ -303,7 +303,9 @@ function ViewGrid< Item >( {
 	const intersectionObserverRef = useRef< IntersectionObserver | null >(
 		null
 	);
-	const itemRefs = useRef< Map< string, HTMLElement > >( new Map() );
+	const itemRefs = useRef< Map< number, HTMLElement > >( new Map() );
+	// Track stable positions for items in infinite scroll mode
+	const itemPositions = useRef< Map< string, number > >( new Map() );
 
 	const titleField = fields.find(
 		( field ) => field.id === view?.titleField
@@ -351,6 +353,25 @@ function ViewGrid< Item >( {
 	const dataByGroup = groupField ? getDataByGroup( data, groupField ) : null;
 	const isInfiniteScroll = view.infiniteScrollEnabled && ! dataByGroup;
 
+	// Update item positions for infinite scroll
+	// Store positions from item metadata to ensure they remain stable
+	useEffect( () => {
+		if ( ! isInfiniteScroll ) {
+			return;
+		}
+
+		data.forEach( ( item ) => {
+			const itemId = getItemId( item );
+			if ( ! itemPositions.current.has( itemId ) ) {
+				// Check if item has position metadata
+				const position = ( item as any ).position;
+				if ( position !== undefined ) {
+					itemPositions.current.set( itemId, position );
+				}
+			}
+		} );
+	}, [ data, getItemId, isInfiniteScroll ] );
+
 	// Set up IntersectionObserver
 	useEffect( () => {
 		if ( ! intersectionObserverCallback || dataByGroup ) {
@@ -379,7 +400,14 @@ function ViewGrid< Item >( {
 	}, [ intersectionObserverCallback, dataByGroup ] );
 
 	// Helper function to handle item ref changes
-	const setItemRef = ( itemId: string, element: HTMLElement | null ) => {
+	const setItemRef = (
+		itemId: number | undefined,
+		element: HTMLElement | null
+	) => {
+		if ( itemId === undefined ) {
+			return;
+		}
+
 		// Don't observe if we have grouped data
 		if ( dataByGroup ) {
 			return;
@@ -485,13 +513,17 @@ function ViewGrid< Item >( {
 						ref={ resizeObserverRef }
 						role={ isInfiniteScroll ? 'feed' : undefined }
 					>
-						{ data.map( ( item, index ) => {
+						{ data.map( ( item ) => {
 							const itemId = getItemId( item );
+							// Get stable position for infinite scroll
+							const stablePosition = isInfiniteScroll
+								? itemPositions.current.get( itemId )
+								: undefined;
 							return (
 								<GridItem
 									key={ itemId }
 									itemRef={ ( element ) =>
-										setItemRef( itemId, element )
+										setItemRef( stablePosition, element )
 									}
 									view={ view }
 									selection={ selection }
@@ -511,9 +543,7 @@ function ViewGrid< Item >( {
 									config={ {
 										sizes: size,
 									} }
-									posinset={
-										isInfiniteScroll ? index + 1 : undefined
-									}
+									posinset={ stablePosition }
 								/>
 							);
 						} ) }
