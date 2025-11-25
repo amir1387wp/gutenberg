@@ -51,6 +51,10 @@ const getAttributeType = ( blockName, attribute ) => {
 	return _attributeType === 'rich-text' ? 'string' : _attributeType;
 };
 
+const getAttributeFormat = ( blockName, attribute ) => {
+	return getBlockType( blockName ).attributes?.[ attribute ]?.format;
+};
+
 const useToolsPanelDropdownMenuProps = () => {
 	const isMobile = useViewportMatch( 'medium', '<' );
 	return ! isMobile
@@ -69,12 +73,13 @@ function BlockBindingsPanelMenuContent( { attribute, binding, sources } ) {
 	const { updateBlockBindings } = useBlockBindingsUtils();
 	const isMobile = useViewportMatch( 'medium', '<' );
 	const blockContext = useContext( BlockContext );
-	const { attributeType, select } = useSelect(
+	const { attributeType, attributeFormat, select } = useSelect(
 		( _select ) => {
 			const { name: blockName } =
 				_select( blockEditorStore ).getBlock( clientId );
 			return {
 				attributeType: getAttributeType( blockName, attribute ),
+				attributeFormat: getAttributeFormat( blockName, attribute ),
 				select: _select,
 			};
 		},
@@ -85,7 +90,11 @@ function BlockBindingsPanelMenuContent( { attribute, binding, sources } ) {
 			{ Object.entries( sources ).map( ( [ sourceKey, data ] ) => {
 				// Only show sources that have compatible data for this specific attribute.
 				const sourceDataItems = data.filter(
-					( item ) => item.type === attributeType
+					( item ) =>
+						item.type === attributeType &&
+						( attributeFormat
+							? item.format === attributeFormat
+							: true )
 				);
 
 				const noItemsAvailable =
@@ -197,9 +206,14 @@ function BlockBindingsAttribute( { attribute, binding, sources, blockName } ) {
 	if ( isNotBound ) {
 		// Check if there are any compatible sources for this attribute type.
 		const attributeType = getAttributeType( blockName, attribute );
+		const attributeFormat = getAttributeFormat( blockName, attribute );
 
 		const hasCompatibleSources = Object.values( sources ).some( ( items ) =>
-			items.some( ( item ) => item.type === attributeType )
+			items.some(
+				( item ) =>
+					item.type === attributeType &&
+					( attributeFormat ? item.format === attributeFormat : true )
+			)
 		);
 
 		if ( ! hasCompatibleSources ) {
@@ -390,11 +404,21 @@ export const BlockBindingsPanel = ( { name: blockName, metadata } ) => {
 							blockName,
 							attribute
 						);
+						const attributeFormat = getAttributeFormat(
+							blockName,
+							attribute
+						);
 
 						const hasCompatibleDataForAttribute = Object.values(
 							sources
 						).some( ( data ) =>
-							data.some( ( item ) => item.type === attributeType )
+							data.some(
+								( item ) =>
+									item.type === attributeType &&
+									( attributeFormat
+										? item.format === attributeFormat
+										: true )
+							)
 						);
 
 						const isAttributeReadOnly =
