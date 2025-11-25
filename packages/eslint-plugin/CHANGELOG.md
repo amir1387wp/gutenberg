@@ -5,6 +5,7 @@
 ### Breaking CHanges
 
 -   Updated recommended ruleset to enforce [`import/no-unresolved`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-unresolved.md) for `@wordpress/` packages. These packages were previously exempted from the rule.
+-   Removed default configuration of [`import/internal-regex`](https://github.com/import-js/eslint-plugin-import/tree/main?tab=readme-ov-file#importinternal-regex) to classify `@wordpress/` packages as internal. From the perspective of an external consumer of this package, `@wordpress/` packages should be considered external.
 
 ## 22.21.0 (2025-11-12)
 
