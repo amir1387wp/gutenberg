@@ -34,7 +34,9 @@
 	"react-native": "src/index",
 	"wpScript": true,
 	"sideEffects": [
-		"{src,build,build-module}/{index.js,store/index.js}"
+		"src/store/index.js",
+		"build/index.js",
+		"build-module/index.js"
 	],
 	"dependencies": {
 		"@wordpress/autop": "file:../autop",

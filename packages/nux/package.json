@@ -37,7 +37,10 @@
 	"sideEffects": [
 		"build-style/**",
 		"src/**/*.scss",
-		"{src,build,build-module}/{index.js,store/index.js}"
+		"src/index.js",
+		"src/store/index.js",
+		"build/index.js",
+		"build-module/index.js"
 	],
 	"dependencies": {
 		"@wordpress/base-styles": "file:../base-styles",
