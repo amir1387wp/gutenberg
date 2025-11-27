@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Breaking changes
+
+- Field API: `getElements` signature changed to support pagination and filtering. [#73623](https://github.com/WordPress/gutenberg/pull/73623)
+
 ### Enhancements
 
 - DataForm: add support for `min`/`max` and `minLength`/`maxLength` validation for relevant controls. [#73465](https://github.com/WordPress/gutenberg/pull/73465)
