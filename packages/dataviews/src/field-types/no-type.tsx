@@ -31,6 +31,8 @@ export default {
 		required: field.isValid?.required ? isValidRequired : false,
 		min: false,
 		max: false,
+		minLength: false,
+		maxLength: false,
 		elements: field.isValid?.elements ?? true,
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),

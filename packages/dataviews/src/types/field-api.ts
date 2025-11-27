@@ -98,8 +98,24 @@ export type NormalizedRules< Item > = {
 		| ( ( item: Item, field: NormalizedField< Item > ) => boolean );
 	elements?: boolean;
 	pattern?: string;
-	minLength?: number;
-	maxLength?: number;
+	minLength:
+		| false
+		| {
+				value: number;
+				validate: (
+					item: Item,
+					field: NormalizedField< Item >
+				) => boolean;
+		  };
+	maxLength:
+		| false
+		| {
+				value: number;
+				validate: (
+					item: Item,
+					field: NormalizedField< Item >
+				) => boolean;
+		  };
 	min:
 		| false
 		| {

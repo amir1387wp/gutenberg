@@ -41,8 +41,12 @@ export default function Textarea< Item >( {
 			help={ description }
 			onChange={ onChangeControl }
 			rows={ rows }
-			minLength={ isValid?.minLength }
-			maxLength={ isValid?.maxLength }
+			minLength={
+				isValid?.minLength ? isValid.minLength.value : undefined
+			}
+			maxLength={
+				isValid?.maxLength ? isValid.maxLength.value : undefined
+			}
 			__next40pxDefaultSize
 			__nextHasNoMarginBottom
 			hideLabelFromVision={ hideLabelFromVision }

@@ -115,6 +115,8 @@ export default {
 		required: field?.isValid?.required ? () => true : false,
 		min: false,
 		max: false,
+		minLength: false,
+		maxLength: false,
 		elements: field.isValid?.elements ?? true,
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),

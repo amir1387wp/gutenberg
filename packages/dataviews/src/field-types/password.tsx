@@ -5,6 +5,8 @@ import type { DataViewRenderFieldProps, Field } from '../types';
 import type { FieldType } from '../types/private';
 import RenderFromElements from './utils/render-from-elements';
 import isValidRequired from './utils/is-valid-required';
+import createIsValidMinLength from './utils/is-valid-min-length';
+import createIsValidMaxLength from './utils/is-valid-max-length';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	return field.hasElements ? (
@@ -29,8 +31,24 @@ export default {
 		min: false,
 		max: false,
 		pattern: field.isValid?.pattern,
-		minLength: field.isValid?.minLength,
-		maxLength: field.isValid?.maxLength,
+		minLength:
+			field.isValid?.minLength !== undefined
+				? {
+						value: field.isValid.minLength,
+						validate: createIsValidMinLength(
+							field.isValid.minLength
+						),
+				  }
+				: false,
+		maxLength:
+			field.isValid?.maxLength !== undefined
+				? {
+						value: field.isValid.maxLength,
+						validate: createIsValidMaxLength(
+							field.isValid.maxLength
+						),
+				  }
+				: false,
 		elements: field.isValid?.elements ?? true,
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),

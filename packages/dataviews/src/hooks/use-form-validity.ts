@@ -474,48 +474,36 @@ function validateFormField< Item >(
 	}
 
 	// Validate the field: isValid.minLength
-	if (
-		!! formField.field &&
-		formField.field.isValid.minLength !== undefined &&
-		( formField.field.type === 'text' ||
-			formField.field.type === 'email' ||
-			formField.field.type === 'url' ||
-			formField.field.type === 'telephone' ||
-			formField.field.type === 'password' )
-	) {
-		const value = formField.field.getValue( { item } );
-		if ( ! isEmptyNullOrUndefined( value ) ) {
-			if ( String( value ).length < formField.field.isValid.minLength ) {
-				return {
-					minLength: {
-						type: 'invalid',
-						message: __( 'Value is too short.' ),
-					},
-				};
-			}
+	if ( formField.field?.isValid.minLength ) {
+		if (
+			! formField.field.isValid.minLength.validate(
+				item,
+				formField.field
+			)
+		) {
+			return {
+				minLength: {
+					type: 'invalid',
+					message: __( 'Value is too short.' ),
+				},
+			};
 		}
 	}
 
 	// Validate the field: isValid.maxLength
-	if (
-		!! formField.field &&
-		formField.field.isValid.maxLength !== undefined &&
-		( formField.field.type === 'text' ||
-			formField.field.type === 'email' ||
-			formField.field.type === 'url' ||
-			formField.field.type === 'telephone' ||
-			formField.field.type === 'password' )
-	) {
-		const value = formField.field.getValue( { item } );
-		if ( ! isEmptyNullOrUndefined( value ) ) {
-			if ( String( value ).length > formField.field.isValid.maxLength ) {
-				return {
-					maxLength: {
-						type: 'invalid',
-						message: __( 'Value is too long.' ),
-					},
-				};
-			}
+	if ( formField.field?.isValid.maxLength ) {
+		if (
+			! formField.field.isValid.maxLength.validate(
+				item,
+				formField.field
+			)
+		) {
+			return {
+				maxLength: {
+					type: 'invalid',
+					message: __( 'Value is too long.' ),
+				},
+			};
 		}
 	}
 

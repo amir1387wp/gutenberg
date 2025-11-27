@@ -22,6 +22,8 @@ import {
 import render from './utils/render-default';
 import sort from './utils/sort-text';
 import isValidRequired from './utils/is-valid-required';
+import createIsValidMinLength from './utils/is-valid-min-length';
+import createIsValidMaxLength from './utils/is-valid-max-length';
 
 // Email validation regex based on HTML5 spec
 // https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
@@ -67,8 +69,24 @@ export default {
 		min: false,
 		max: false,
 		pattern: field.isValid?.pattern,
-		minLength: field.isValid?.minLength,
-		maxLength: field.isValid?.maxLength,
+		minLength:
+			field.isValid?.minLength !== undefined
+				? {
+						value: field.isValid.minLength,
+						validate: createIsValidMinLength(
+							field.isValid.minLength
+						),
+				  }
+				: false,
+		maxLength:
+			field.isValid?.maxLength !== undefined
+				? {
+						value: field.isValid.maxLength,
+						validate: createIsValidMaxLength(
+							field.isValid.maxLength
+						),
+				  }
+				: false,
 		elements: field.isValid?.elements ?? true,
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),
