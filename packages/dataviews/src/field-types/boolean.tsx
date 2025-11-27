@@ -73,6 +73,8 @@ export default {
 	sort,
 	getIsValid: ( field: Field< any > ) => ( {
 		required: field?.isValid?.required ? isValidRequiredFn : false,
+		min: false,
+		max: false,
 		elements: field.isValid?.elements ?? true,
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),

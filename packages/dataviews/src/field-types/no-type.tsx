@@ -29,6 +29,8 @@ export default {
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
 		required: field.isValid?.required ? isValidRequired : false,
+		min: false,
+		max: false,
 		elements: field.isValid?.elements ?? true,
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),

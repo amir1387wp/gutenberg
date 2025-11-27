@@ -100,8 +100,24 @@ export type NormalizedRules< Item > = {
 	pattern?: string;
 	minLength?: number;
 	maxLength?: number;
-	min?: number;
-	max?: number;
+	min:
+		| false
+		| {
+				value: number;
+				validate: (
+					item: Item,
+					field: NormalizedField< Item >
+				) => boolean;
+		  };
+	max:
+		| false
+		| {
+				value: number;
+				validate: (
+					item: Item,
+					field: NormalizedField< Item >
+				) => boolean;
+		  };
 	custom:
 		| ( ( item: Item, field: NormalizedField< Item > ) => null | string )
 		| ( (

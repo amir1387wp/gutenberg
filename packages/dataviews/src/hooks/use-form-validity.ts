@@ -450,42 +450,26 @@ function validateFormField< Item >(
 	}
 
 	// Validate the field: isValid.min
-	if (
-		!! formField.field &&
-		formField.field.isValid.min !== undefined &&
-		( formField.field.type === 'integer' ||
-			formField.field.type === 'number' )
-	) {
-		const value = formField.field.getValue( { item } );
-		if ( ! isEmptyNullOrUndefined( value ) ) {
-			if ( Number( value ) < formField.field.isValid.min ) {
-				return {
-					min: {
-						type: 'invalid',
-						message: __( 'Value is below the minimum.' ),
-					},
-				};
-			}
+	if ( formField.field?.isValid.min ) {
+		if ( ! formField.field.isValid.min.validate( item, formField.field ) ) {
+			return {
+				min: {
+					type: 'invalid',
+					message: __( 'Value is below the minimum.' ),
+				},
+			};
 		}
 	}
 
 	// Validate the field: isValid.max
-	if (
-		!! formField.field &&
-		formField.field.isValid.max !== undefined &&
-		( formField.field.type === 'integer' ||
-			formField.field.type === 'number' )
-	) {
-		const value = formField.field.getValue( { item } );
-		if ( ! isEmptyNullOrUndefined( value ) ) {
-			if ( Number( value ) > formField.field.isValid.max ) {
-				return {
-					max: {
-						type: 'invalid',
-						message: __( 'Value is above the maximum.' ),
-					},
-				};
-			}
+	if ( formField.field?.isValid.max ) {
+		if ( ! formField.field.isValid.max.validate( item, formField.field ) ) {
+			return {
+				max: {
+					type: 'invalid',
+					message: __( 'Value is above the maximum.' ),
+				},
+			};
 		}
 	}
 

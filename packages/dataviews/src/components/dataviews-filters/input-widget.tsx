@@ -13,7 +13,12 @@ import { Flex } from '@wordpress/components';
 /**
  * Internal dependencies
  */
-import type { View, NormalizedFilter, NormalizedField } from '../../types';
+import type {
+	View,
+	NormalizedFilter,
+	NormalizedField,
+	NormalizedRules,
+} from '../../types';
 import { getCurrentValue } from './utils';
 
 interface UserInputWidgetProps {
@@ -60,8 +65,10 @@ export default function InputWidget( {
 				// Deactivate validation for filters.
 				isValid: {
 					required: false,
+					min: false,
+					max: false,
 					custom: () => null,
-				},
+				} satisfies NormalizedRules< any >,
 				// Configure getValue/setValue as if Item was a plain object.
 				getValue: ( { item }: { item: any } ) =>
 					item[ currentField.id ],
