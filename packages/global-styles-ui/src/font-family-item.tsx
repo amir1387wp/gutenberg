@@ -12,9 +12,9 @@ import { useContext } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { FontLibraryContext } from './font-library-modal/context';
-import { getFamilyPreviewStyle } from './font-library-modal/utils/preview-styles';
-import type { FontFamily } from './font-library-modal/types';
+import { FontLibraryContext } from './font-library/context';
+import { getFamilyPreviewStyle } from './font-library/utils/preview-styles';
+import type { FontFamily } from './font-library/types';
 
 interface FontFamilyItemProps {
 	font: FontFamily;
