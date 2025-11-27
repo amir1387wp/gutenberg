@@ -65,7 +65,7 @@ function ModalContent< Item >( {
 
 	const { validity } = useFormValidity(
 		modalData,
-		fields as Field< any >[],
+		fields as unknown as Field< Item >[], // TODO: fix type issue
 		form
 	);
 
