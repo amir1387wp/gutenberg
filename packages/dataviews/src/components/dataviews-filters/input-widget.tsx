@@ -67,6 +67,7 @@ export default function InputWidget( {
 					required: false,
 					min: false,
 					max: false,
+					pattern: false,
 					minLength: false,
 					maxLength: false,
 					custom: () => null,

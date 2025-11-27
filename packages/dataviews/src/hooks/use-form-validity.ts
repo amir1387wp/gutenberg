@@ -23,8 +23,6 @@ import type {
 	NormalizedField,
 	NormalizedFormField,
 } from '../types';
-const isEmptyNullOrUndefined = ( value: any ) =>
-	[ undefined, '', null ].includes( value );
 
 function isFormValid( formValidity: FormValidity | undefined ): boolean {
 	if ( ! formValidity ) {
@@ -414,38 +412,26 @@ function validateFormField< Item >(
 	}
 
 	// Validate the field: isValid.pattern
-	if (
-		!! formField.field &&
-		formField.field.isValid.pattern &&
-		( formField.field.type === 'text' ||
-			formField.field.type === 'email' ||
-			formField.field.type === 'url' ||
-			formField.field.type === 'telephone' ||
-			formField.field.type === 'password' )
-	) {
-		const value = formField.field.getValue( { item } );
-		// Only validate pattern if the value is not empty
-		if ( ! isEmptyNullOrUndefined( value ) ) {
-			try {
-				const regex = new RegExp( formField.field.isValid.pattern );
-				if ( ! regex.test( String( value ) ) ) {
-					return {
-						pattern: {
-							type: 'invalid',
-							message: __(
-								'Value does not match the required pattern.'
-							),
-						},
-					};
-				}
-			} catch ( error ) {
-				return {
-					pattern: {
-						type: 'invalid',
-						message: __( 'Invalid pattern configuration.' ),
-					},
-				};
-			}
+	if ( formField.field?.isValid.pattern ) {
+		// First check if the regex pattern itself is invalid
+		if ( ! formField.field.isValid.pattern.isValidRegex ) {
+			return {
+				pattern: {
+					type: 'invalid',
+					message: __( 'Invalid pattern configuration.' ),
+				},
+			};
+		}
+		// Then check if value matches the valid pattern
+		if (
+			! formField.field.isValid.pattern.validate( item, formField.field )
+		) {
+			return {
+				pattern: {
+					type: 'invalid',
+					message: __( 'Value does not match the required pattern.' ),
+				},
+			};
 		}
 	}
 

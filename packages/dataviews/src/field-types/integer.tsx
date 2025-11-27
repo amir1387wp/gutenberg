@@ -87,6 +87,7 @@ export default {
 						validate: createIsValidMax( field.isValid.max ),
 				  }
 				: false,
+		pattern: false,
 		minLength: false,
 		maxLength: false,
 		elements: field.isValid?.elements ?? true,

@@ -67,7 +67,7 @@ export default function ValidatedText< Item >( {
 			type={ type }
 			prefix={ prefix }
 			suffix={ suffix }
-			pattern={ isValid?.pattern }
+			pattern={ isValid?.pattern ? isValid.pattern.pattern : undefined }
 			minLength={
 				isValid?.minLength ? isValid.minLength.value : undefined
 			}

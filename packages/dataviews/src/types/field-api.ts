@@ -97,7 +97,16 @@ export type NormalizedRules< Item > = {
 		| false
 		| ( ( item: Item, field: NormalizedField< Item > ) => boolean );
 	elements?: boolean;
-	pattern?: string;
+	pattern:
+		| false
+		| {
+				pattern: string;
+				isValidRegex: boolean;
+				validate: (
+					item: Item,
+					field: NormalizedField< Item >
+				) => boolean;
+		  };
 	minLength:
 		| false
 		| {

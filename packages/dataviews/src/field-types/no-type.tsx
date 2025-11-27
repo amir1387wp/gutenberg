@@ -31,6 +31,7 @@ export default {
 		required: field.isValid?.required ? isValidRequired : false,
 		min: false,
 		max: false,
+		pattern: false,
 		minLength: false,
 		maxLength: false,
 		elements: field.isValid?.elements ?? true,
