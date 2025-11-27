@@ -6,7 +6,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import type { DataViewRenderFieldProps, Rules, SortDirection } from '../types';
+import type {
+	DataViewRenderFieldProps,
+	Field,
+	NormalizedField,
+	SortDirection,
+} from '../types';
 import type { FieldType } from '../types/private';
 import RenderFromElements from './utils/render-from-elements';
 import { OPERATOR_IS, OPERATOR_IS_NOT } from '../constants';
@@ -27,21 +32,22 @@ function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	return null;
 }
 
-const isValid: Rules< any > = {
-	elements: true,
-	custom: ( item: any, normalizedField ) => {
-		const value = normalizedField.getValue( { item } );
+function isValidRequiredFn( value: any ) {
+	return value === true;
+}
 
-		if (
-			! [ undefined, '', null ].includes( value ) &&
-			! [ true, false ].includes( value )
-		) {
-			return __( 'Value must be true, false, or undefined' );
-		}
+function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
+	const value = field.getValue( { item } );
 
-		return null;
-	},
-};
+	if (
+		! [ undefined, '', null ].includes( value ) &&
+		! [ true, false ].includes( value )
+	) {
+		return __( 'Value must be true, false, or undefined' );
+	}
+
+	return null;
+}
 
 const sort = ( a: any, b: any, direction: SortDirection ) => {
 	const boolA = Boolean( a );
@@ -65,7 +71,11 @@ export default {
 	render,
 	Edit: 'checkbox',
 	sort,
-	isValid,
+	getIsValid: ( field: Field< any > ) => ( {
+		required: field?.isValid?.required ? isValidRequiredFn : false,
+		elements: field.isValid?.elements ?? true,
+		custom: field.isValid?.custom ?? isValidCustomFn,
+	} ),
 	enableSorting: true,
 	enableGlobalSearch: false,
 	defaultOperators: [ OPERATOR_IS, OPERATOR_IS_NOT ],

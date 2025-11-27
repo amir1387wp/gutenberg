@@ -103,10 +103,7 @@ export default function normalizeFields< Item >(
 			enableSorting: field.enableSorting ?? defaultProps.enableSorting,
 			enableGlobalSearch:
 				field.enableGlobalSearch ?? defaultProps.enableGlobalSearch,
-			isValid: {
-				...defaultProps.isValid,
-				...field.isValid,
-			},
+			isValid: defaultProps.getIsValid( field ),
 			filterBy: getFilterBy(
 				field,
 				defaultProps.defaultOperators,

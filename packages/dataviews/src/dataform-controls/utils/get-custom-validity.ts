@@ -1,10 +1,10 @@
 /**
  * Internal dependencies
  */
-import type { Rules, FieldValidity } from '../../types';
+import type { NormalizedRules, FieldValidity } from '../../types';
 
 export default function getCustomValidity< Item >(
-	isValid: Rules< Item >,
+	isValid: NormalizedRules< Item >,
 	validity: FieldValidity | undefined
 ) {
 	let customValidity;

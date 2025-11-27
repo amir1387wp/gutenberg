@@ -26,34 +26,6 @@ import type {
 const isEmptyNullOrUndefined = ( value: any ) =>
 	[ undefined, '', null ].includes( value );
 
-const isArrayOrElementsEmptyNullOrUndefined = ( value: any ) => {
-	return (
-		! Array.isArray( value ) ||
-		value.length === 0 ||
-		value.every( ( element: any ) => isEmptyNullOrUndefined( element ) )
-	);
-};
-
-function isInvalidForRequired( fieldType: string | undefined, value: any ) {
-	if (
-		( fieldType === undefined && isEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'text' && isEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'email' && isEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'url' && isEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'telephone' && isEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'password' && isEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'integer' && isEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'number' && isEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'array' &&
-			isArrayOrElementsEmptyNullOrUndefined( value ) ) ||
-		( fieldType === 'boolean' && value !== true )
-	) {
-		return true;
-	}
-
-	return false;
-}
-
 function isFormValid( formValidity: FormValidity | undefined ): boolean {
 	if ( ! formValidity ) {
 		return true;
@@ -433,17 +405,12 @@ function validateFormField< Item >(
 	promiseHandler: PromiseHandler< Item >
 ): FieldValidity | undefined {
 	// Validate the field: isValid.required
-	if (
-		!! formField.field &&
-		formField.field.isValid.required &&
-		isInvalidForRequired(
-			formField.field.type,
-			formField.field.getValue( { item } )
-		)
-	) {
-		return {
-			required: { type: 'invalid' },
-		};
+	if ( typeof formField.field?.isValid.required === 'function' ) {
+		if ( ! formField.field.isValid.required( item, formField.field ) ) {
+			return {
+				required: { type: 'invalid' },
+			};
+		}
 	}
 
 	// Validate the field: isValid.pattern

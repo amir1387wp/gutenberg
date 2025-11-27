@@ -6,7 +6,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import type { DataViewRenderFieldProps, Rules } from '../types';
+import type {
+	DataViewRenderFieldProps,
+	Field,
+	NormalizedField,
+} from '../types';
 import type { FieldType } from '../types/private';
 import {
 	OPERATOR_IS,
@@ -23,6 +27,7 @@ import {
 } from '../constants';
 import RenderFromElements from './utils/render-from-elements';
 import sort from './utils/sort-number';
+import isValidRequired from './utils/is-valid-required';
 
 function isEmpty( value: unknown ): value is '' | undefined | null {
 	return value === '' || value === undefined || value === null;
@@ -41,25 +46,21 @@ function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	return null;
 }
 
-const isValid: Rules< any > = {
-	elements: true,
-	custom: ( item: any, normalizedField ) => {
-		const value = normalizedField.getValue( { item } );
+function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
+	const value = field.getValue( { item } );
 
-		if ( ! isEmpty( value ) && ! Number.isFinite( value ) ) {
-			return __( 'Value must be a number.' );
-		}
+	if ( ! isEmpty( value ) && ! Number.isFinite( value ) ) {
+		return __( 'Value must be a number.' );
+	}
 
-		return null;
-	},
-};
+	return null;
+}
 
 export default {
 	type: 'number',
 	render,
 	Edit: 'number',
 	sort,
-	isValid,
 	enableSorting: true,
 	enableGlobalSearch: false,
 	defaultOperators: [
@@ -87,4 +88,11 @@ export default {
 		OPERATOR_IS_NOT_ALL,
 	],
 	getFormat: () => ( {} ),
+	getIsValid: ( field: Field< any > ) => ( {
+		required: field.isValid?.required ? isValidRequired : false,
+		min: field.isValid?.min,
+		max: field.isValid?.max,
+		elements: field.isValid?.elements ?? true,
+		custom: field.isValid?.custom ?? isValidCustomFn,
+	} ),
 } satisfies FieldType< any >;

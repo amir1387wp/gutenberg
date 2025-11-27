@@ -92,6 +92,24 @@ export type Rules< Item > = {
 		  ) => Promise< null | string > );
 };
 
+export type NormalizedRules< Item > = {
+	required:
+		| false
+		| ( ( item: Item, field: NormalizedField< Item > ) => boolean );
+	elements?: boolean;
+	pattern?: string;
+	minLength?: number;
+	maxLength?: number;
+	min?: number;
+	max?: number;
+	custom:
+		| ( ( item: Item, field: NormalizedField< Item > ) => null | string )
+		| ( (
+				item: Item,
+				field: NormalizedField< Item >
+		  ) => Promise< null | string > );
+};
+
 /**
  * Edit configuration for textarea controls.
  */
@@ -262,7 +280,7 @@ export type FormatDate = {
 };
 export type DayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-type NormalizedFieldBase< Item > = Omit< Field< Item >, 'Edit' > & {
+type NormalizedFieldBase< Item > = Omit< Field< Item >, 'Edit' | 'isValid' > & {
 	label: string;
 	header: string | ReactElement;
 	getValue: ( args: { item: Item } ) => any;
@@ -271,7 +289,7 @@ type NormalizedFieldBase< Item > = Omit< Field< Item >, 'Edit' > & {
 	Edit: ComponentType< DataFormControlProps< Item > > | null;
 	hasElements: boolean;
 	sort: ( a: Item, b: Item, direction: SortDirection ) => number;
-	isValid: Rules< Item >;
+	isValid: NormalizedRules< Item >;
 	enableHiding: boolean;
 	enableSorting: boolean;
 	filterBy: Required< FilterByConfig > | false;

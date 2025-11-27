@@ -11,7 +11,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import type { DataViewRenderFieldProps, Rules, SortDirection } from '../types';
+import type {
+	DataViewRenderFieldProps,
+	Field,
+	NormalizedField,
+	SortDirection,
+} from '../types';
 import type { FieldType } from '../types/private';
 import RenderFromElements from './utils/render-from-elements';
 import {
@@ -50,21 +55,18 @@ function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	);
 }
 
-const isValid: Rules< any > = {
-	elements: true,
-	custom: ( item: any, normalizedField ) => {
-		const value = normalizedField.getValue( { item } );
+function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
+	const value = field.getValue( { item } );
 
-		if (
-			! [ undefined, '', null ].includes( value ) &&
-			! colord( value ).isValid()
-		) {
-			return __( 'Value must be a valid color.' );
-		}
+	if (
+		! [ undefined, '', null ].includes( value ) &&
+		! colord( value ).isValid()
+	) {
+		return __( 'Value must be a valid color.' );
+	}
 
-		return null;
-	},
-};
+	return null;
+}
 
 const sort = ( a: any, b: any, direction: SortDirection ) => {
 	// Convert colors to HSL for better sorting
@@ -99,7 +101,6 @@ export default {
 	render,
 	Edit: 'color',
 	sort,
-	isValid,
 	enableSorting: true,
 	enableGlobalSearch: false,
 	defaultOperators: [ OPERATOR_IS_ANY, OPERATOR_IS_NONE ],
@@ -110,4 +111,9 @@ export default {
 		OPERATOR_IS_NONE,
 	],
 	getFormat: () => ( {} ),
+	getIsValid: ( field: Field< any > ) => ( {
+		required: field?.isValid?.required ? () => true : false,
+		elements: field.isValid?.elements ?? true,
+		custom: field.isValid?.custom ?? isValidCustomFn,
+	} ),
 } satisfies FieldType< any >;

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import type { DataViewRenderFieldProps, SortDirection } from '../types';
+import type { DataViewRenderFieldProps, Field, SortDirection } from '../types';
 import type { FieldType } from '../types/private';
 import RenderFromElements from './utils/render-from-elements';
 import parseDateTime from './utils/parse-date-time';
@@ -46,10 +46,6 @@ export default {
 	render,
 	Edit: 'datetime',
 	sort,
-	isValid: {
-		elements: true,
-		custom: () => null,
-	},
 	enableSorting: true,
 	enableGlobalSearch: false,
 	defaultOperators: [
@@ -73,4 +69,9 @@ export default {
 		OPERATOR_OVER,
 	],
 	getFormat: () => ( {} ),
+	getIsValid: ( field: Field< any > ) => ( {
+		required: field.isValid?.required ? () => true : false,
+		elements: field.isValid?.elements ?? true,
+		custom: field.isValid?.custom ?? ( () => null ),
+	} ),
 } satisfies FieldType< any >;

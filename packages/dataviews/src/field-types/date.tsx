@@ -79,10 +79,6 @@ export default {
 	render,
 	Edit: 'date',
 	sort,
-	isValid: {
-		elements: true,
-		custom: () => null,
-	},
 	enableSorting: true,
 	enableGlobalSearch: false,
 	defaultOperators: [
@@ -108,4 +104,9 @@ export default {
 		OPERATOR_BETWEEN,
 	],
 	getFormat,
+	getIsValid: ( field: Field< any > ) => ( {
+		required: field.isValid?.required ? () => true : false,
+		elements: field.isValid?.elements ?? true,
+		custom: field.isValid?.custom ?? ( () => null ),
+	} ),
 } satisfies FieldType< any >;

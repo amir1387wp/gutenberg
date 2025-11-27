@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import type { Field } from '../types';
 import type { FieldType } from '../types/private';
 
 export default {
@@ -8,13 +9,14 @@ export default {
 	render: () => null,
 	Edit: null,
 	sort: () => 0,
-	isValid: {
-		elements: true,
-		custom: () => null,
-	},
 	enableSorting: false,
 	enableGlobalSearch: false,
 	defaultOperators: [],
 	validOperators: [],
 	getFormat: () => ( {} ),
+	getIsValid: ( field: Field< any > ) => ( {
+		required: field.isValid?.required ? () => true : false,
+		elements: field.isValid?.elements ?? true,
+		custom: field.isValid?.custom ?? ( () => null ),
+	} ),
 } satisfies FieldType< any >;

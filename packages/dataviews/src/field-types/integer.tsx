@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import type { Rules } from '../types';
+import type { Field, NormalizedField } from '../types';
 import type { FieldType } from '../types/private';
 import {
 	OPERATOR_IS,
@@ -23,28 +23,25 @@ import {
 } from '../constants';
 import render from './utils/render-default';
 import sort from './utils/sort-number';
+import isValidRequired from './utils/is-valid-required';
 
-const isValid: Rules< any > = {
-	elements: true,
-	custom: ( item: any, normalizedField ) => {
-		const value = normalizedField.getValue( { item } );
-		if (
-			! [ undefined, '', null ].includes( value ) &&
-			! Number.isInteger( value )
-		) {
-			return __( 'Value must be an integer.' );
-		}
+function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
+	const value = field.getValue( { item } );
+	if (
+		! [ undefined, '', null ].includes( value ) &&
+		! Number.isInteger( value )
+	) {
+		return __( 'Value must be an integer.' );
+	}
 
-		return null;
-	},
-};
+	return null;
+}
 
 export default {
 	type: 'integer',
 	render,
 	Edit: 'integer',
 	sort,
-	isValid,
 	enableSorting: true,
 	enableGlobalSearch: false,
 	defaultOperators: [
@@ -72,4 +69,11 @@ export default {
 		OPERATOR_IS_NOT_ALL,
 	],
 	getFormat: () => ( {} ),
+	getIsValid: ( field: Field< any > ) => ( {
+		required: field.isValid?.required ? isValidRequired : false,
+		min: field.isValid?.min,
+		max: field.isValid?.max,
+		elements: field.isValid?.elements ?? true,
+		custom: field.isValid?.custom ?? isValidCustomFn,
+	} ),
 } satisfies FieldType< any >;

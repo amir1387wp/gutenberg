@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import type { Field } from '../types';
 import type { FieldType } from '../types/private';
 import {
 	OPERATOR_IS,
@@ -15,16 +16,13 @@ import {
 } from '../constants';
 import render from './utils/render-default';
 import sort from './utils/sort-text';
+import isValidRequired from './utils/is-valid-required';
 
 export default {
 	type: 'telephone',
 	render,
 	Edit: 'telephone',
 	sort,
-	isValid: {
-		elements: true,
-		custom: () => null,
-	},
 	enableSorting: true,
 	enableGlobalSearch: false,
 	defaultOperators: [ OPERATOR_IS_ANY, OPERATOR_IS_NONE ],
@@ -41,4 +39,12 @@ export default {
 		OPERATOR_IS_NOT_ALL,
 	],
 	getFormat: () => ( {} ),
+	getIsValid: ( field: Field< any > ) => ( {
+		required: field.isValid?.required ? isValidRequired : false,
+		pattern: field.isValid?.pattern,
+		minLength: field.isValid?.minLength,
+		maxLength: field.isValid?.maxLength,
+		elements: field.isValid?.elements ?? true,
+		custom: field.isValid?.custom ?? ( () => null ),
+	} ),
 } satisfies FieldType< any >;
