@@ -53,12 +53,7 @@ export default {
 				: false,
 		minLength:
 			field.isValid?.minLength !== undefined
-				? {
-						value: field.isValid.minLength,
-						validate: createIsValidMinLength(
-							field.isValid.minLength
-						),
-				  }
+				? createIsValidMinLength( field.isValid.minLength )
 				: false,
 		maxLength:
 			field.isValid?.maxLength !== undefined
