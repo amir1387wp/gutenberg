@@ -1,6 +1,6 @@
 export default function isValidRequiredForBool( constraint?: boolean ) {
 	if ( constraint === false ) {
-		return false;
+		return undefined;
 	}
 
 	return {

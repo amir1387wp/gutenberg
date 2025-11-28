@@ -15,13 +15,6 @@ export default {
 	validOperators: [],
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
-		required: false,
-		min: false,
-		max: false,
-		pattern: false,
-		minLength: false,
-		maxLength: false,
-		elements: false,
-		custom: field.isValid?.custom ?? false,
+		custom: field.isValid?.custom,
 	} ),
 } satisfies FieldType< any >;

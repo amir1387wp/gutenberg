@@ -115,11 +115,6 @@ export default {
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
 		required: isValidRequired( field.isValid?.required ),
-		min: false,
-		max: false,
-		pattern: false,
-		minLength: false,
-		maxLength: false,
 		elements: isValidElements( field.isValid?.elements ?? true ),
 		custom: field.isValid?.custom ?? isValidCustom,
 	} ),

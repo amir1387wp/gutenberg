@@ -12,7 +12,7 @@ import type { NormalizedField } from '../../types';
  */
 export default function createIsValidMax( constraint?: number ) {
 	if ( constraint === undefined ) {
-		return false;
+		return undefined;
 	}
 
 	return {

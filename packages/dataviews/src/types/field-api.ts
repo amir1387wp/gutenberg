@@ -93,72 +93,39 @@ export type Rules< Item > = {
 };
 
 export type NormalizedRules< Item > = {
-	required:
-		| false
-		| {
-				constraint: any;
-				validate: (
-					item: Item,
-					field: NormalizedField< Item >
-				) => boolean;
-		  };
-	elements:
-		| false
-		| {
-				constraint: any;
-				validate: (
-					item: Item,
-					field: NormalizedField< Item >,
-					elements: Array< { value: any } >
-				) => boolean;
-		  };
-	pattern:
-		| false
-		| {
-				constraint: any;
-				validate: (
-					item: Item,
-					field: NormalizedField< Item >
-				) => boolean;
-		  };
-	minLength:
-		| false
-		| {
-				constraint: any;
-				validate: (
-					item: Item,
-					field: NormalizedField< Item >
-				) => boolean;
-		  };
-	maxLength:
-		| false
-		| {
-				constraint: any;
-				validate: (
-					item: Item,
-					field: NormalizedField< Item >
-				) => boolean;
-		  };
-	min:
-		| false
-		| {
-				constraint: any;
-				validate: (
-					item: Item,
-					field: NormalizedField< Item >
-				) => boolean;
-		  };
-	max:
-		| false
-		| {
-				constraint: any;
-				validate: (
-					item: Item,
-					field: NormalizedField< Item >
-				) => boolean;
-		  };
-	custom:
-		| false
+	required?: {
+		constraint: any;
+		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
+	};
+	elements?: {
+		constraint: any;
+		validate: (
+			item: Item,
+			field: NormalizedField< Item >,
+			elements: Array< { value: any } >
+		) => boolean;
+	};
+	pattern?: {
+		constraint: any;
+		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
+	};
+	minLength?: {
+		constraint: any;
+		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
+	};
+	maxLength?: {
+		constraint: any;
+		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
+	};
+	min?: {
+		constraint: any;
+		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
+	};
+	max?: {
+		constraint: any;
+		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
+	};
+	custom?:
 		| ( ( item: Item, field: NormalizedField< Item > ) => null | string )
 		| ( (
 				item: Item,

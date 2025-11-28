@@ -13,7 +13,7 @@ import type { NormalizedField } from '../../types';
  */
 export default function createIsValidPattern( constraint?: string ) {
 	if ( constraint === undefined ) {
-		return false;
+		return undefined;
 	}
 
 	let regex: RegExp | null = null;

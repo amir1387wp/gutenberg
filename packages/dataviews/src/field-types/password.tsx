@@ -30,12 +30,10 @@ export default {
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
 		required: isValidRequired( field.isValid?.required ),
-		min: false,
-		max: false,
 		pattern: isValidPattern( field.isValid?.pattern ),
 		minLength: isValidMinLength( field.isValid?.minLength ),
 		maxLength: isValidMaxLength( field.isValid?.maxLength ),
 		elements: isValidElements( field.isValid?.elements ?? true ),
-		custom: field.isValid?.custom ?? false,
+		custom: field.isValid?.custom,
 	} ),
 } satisfies FieldType< any >;

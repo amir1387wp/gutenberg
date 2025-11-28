@@ -12,7 +12,7 @@ import type { NormalizedField } from '../../types';
  */
 export default function createIsValidMinLength( constraint?: number ) {
 	if ( constraint === undefined ) {
-		return false;
+		return undefined;
 	}
 
 	return {
