@@ -12,10 +12,10 @@ export default function createIsValidElements( constraint?: boolean ) {
 		constraint,
 		validate< Item >(
 			item: Item,
-			field: NormalizedField< Item >,
-			elements: Array< { value: any } >
+			field: NormalizedField< Item >
 		): boolean {
 			const value = field.getValue( { item } );
+			const elements = field.elements ?? [];
 			const validValues = elements.map( ( el ) => el.value );
 
 			// Covers both array and non-array values.

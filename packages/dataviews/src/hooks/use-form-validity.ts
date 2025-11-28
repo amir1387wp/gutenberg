@@ -195,11 +195,10 @@ function handleElementsValidationAsync< Item >(
 
 			if (
 				formField.field?.isValid.elements &&
-				! formField.field.isValid.elements.validate(
-					item,
-					formField.field,
-					result
-				)
+				! formField.field.isValid.elements.validate( item, {
+					...formField.field,
+					elements: result,
+				} )
 			) {
 				setFormValidity( ( prev ) => {
 					const newFormValidity = setValidityAtPath(
@@ -439,11 +438,7 @@ function validateFormField< Item >(
 		formField.field.hasElements &&
 		! formField.field.getElements &&
 		Array.isArray( formField.field.elements ) &&
-		! formField.field.isValid.elements.validate(
-			item,
-			formField.field,
-			formField.field.elements
-		)
+		! formField.field.isValid.elements.validate( item, formField.field )
 	) {
 		return {
 			elements: {

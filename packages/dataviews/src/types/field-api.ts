@@ -99,11 +99,7 @@ export type NormalizedRules< Item > = {
 	};
 	elements?: {
 		constraint: any;
-		validate: (
-			item: Item,
-			field: NormalizedField< Item >,
-			elements: Array< { value: any } >
-		) => boolean;
+		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
 	};
 	pattern?: {
 		constraint: any;
