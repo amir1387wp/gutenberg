@@ -158,6 +158,7 @@ export type NormalizedRules< Item > = {
 				) => boolean;
 		  };
 	custom:
+		| false
 		| ( ( item: Item, field: NormalizedField< Item > ) => null | string )
 		| ( (
 				item: Item,

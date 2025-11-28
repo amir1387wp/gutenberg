@@ -22,6 +22,6 @@ export default {
 		minLength: false,
 		maxLength: false,
 		elements: false,
-		custom: field.isValid?.custom ?? ( () => null ),
+		custom: field.isValid?.custom ?? false,
 	} ),
 } satisfies FieldType< any >;

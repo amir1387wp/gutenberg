@@ -36,6 +36,6 @@ export default {
 		minLength: false,
 		maxLength: false,
 		elements: isValidElements( field.isValid?.elements ?? true ),
-		custom: field.isValid?.custom ?? ( () => null ),
+		custom: field.isValid?.custom ?? false,
 	} ),
 } satisfies FieldType< any >;

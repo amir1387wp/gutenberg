@@ -476,10 +476,10 @@ function validateFormField< Item >(
 
 	// Validate the field: isValid.custom (sync)
 	let customError;
-	if ( !! formField.field ) {
+	if ( !! formField.field && formField.field.isValid.custom ) {
 		try {
 			const value = formField.field.getValue( { item } );
-			customError = formField.field.isValid?.custom?.(
+			customError = formField.field.isValid.custom(
 				deepMerge(
 					item,
 					formField.field.setValue( {
