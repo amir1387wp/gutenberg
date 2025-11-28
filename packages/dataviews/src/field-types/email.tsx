@@ -72,10 +72,7 @@ export default {
 		max: false,
 		pattern:
 			field.isValid?.pattern !== undefined
-				? {
-						pattern: field.isValid.pattern,
-						...createIsValidPattern( field.isValid.pattern ),
-				  }
+				? createIsValidPattern( field.isValid.pattern )
 				: false,
 		minLength:
 			field.isValid?.minLength !== undefined

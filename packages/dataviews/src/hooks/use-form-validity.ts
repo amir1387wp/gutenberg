@@ -369,16 +369,6 @@ function validateFormField< Item >(
 
 	// Validate the field: isValid.pattern
 	if ( formField.field?.isValid.pattern ) {
-		// First check if the regex pattern itself is invalid
-		if ( ! formField.field.isValid.pattern.isValidRegex ) {
-			return {
-				pattern: {
-					type: 'invalid',
-					message: __( 'Invalid pattern configuration.' ),
-				},
-			};
-		}
-		// Then check if value matches the valid pattern
 		if (
 			! formField.field.isValid.pattern.validate( item, formField.field )
 		) {

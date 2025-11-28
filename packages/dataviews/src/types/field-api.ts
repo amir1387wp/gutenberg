@@ -109,7 +109,6 @@ export type NormalizedRules< Item > = {
 		| false
 		| {
 				pattern: string;
-				isValidRegex: boolean;
 				validate: (
 					item: Item,
 					field: NormalizedField< Item >

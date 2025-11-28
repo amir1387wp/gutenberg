@@ -22,13 +22,13 @@ export default function createIsValidPattern( pattern: string ) {
 	}
 
 	return {
-		isValidRegex,
+		pattern,
 		validate: function isValidPattern< Item >(
 			item: Item,
 			field: NormalizedField< Item >
 		): boolean {
 			if ( ! isValidRegex || ! regex ) {
-				return true; // Let isValidRegex flag handle this case
+				return false;
 			}
 
 			const value = field.getValue( { item } );
