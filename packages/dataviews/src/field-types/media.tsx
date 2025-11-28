@@ -3,8 +3,6 @@
  */
 import type { Field } from '../types';
 import type { FieldType } from '../types/private';
-import isValidElements from './utils/is-valid-elements';
-import isValidRequiredNoop from './utils/is-valid-required-noop';
 
 export default {
 	type: 'media',
@@ -17,13 +15,13 @@ export default {
 	validOperators: [],
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
-		required: isValidRequiredNoop( field.isValid?.required ),
+		required: false,
 		min: false,
 		max: false,
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements: isValidElements( field.isValid?.elements ?? true ),
+		elements: false,
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),
 } satisfies FieldType< any >;
