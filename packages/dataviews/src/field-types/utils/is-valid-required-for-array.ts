@@ -4,7 +4,7 @@
 import type { NormalizedField } from '../../types';
 
 export default function isValidRequiredForArray( constraint?: boolean ) {
-	if ( constraint === false ) {
+	if ( [ undefined, false ].includes( constraint ) ) {
 		return undefined;
 	}
 
