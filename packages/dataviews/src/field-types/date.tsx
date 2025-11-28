@@ -27,7 +27,7 @@ import {
 	OPERATOR_BETWEEN,
 	DAYS_OF_WEEK,
 } from '../constants';
-import isValidRequiredNoop from './utils/is-valid-required-noop';
+import isValidRequired from './utils/is-valid-required';
 
 function getFormat< Item >( field: Field< Item > ): Required< FormatDate > {
 	return {
@@ -107,7 +107,7 @@ export default {
 	],
 	getFormat,
 	getIsValid: ( field: Field< any > ) => ( {
-		required: isValidRequiredNoop( field.isValid?.required ),
+		required: isValidRequired( field.isValid?.required ),
 		min: false,
 		max: false,
 		pattern: false,
