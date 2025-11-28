@@ -8,7 +8,7 @@ import render from './utils/render-default';
 import sortText from './utils/sort-text';
 import sortNumber from './utils/sort-number';
 import isValidRequired from './utils/is-valid-required';
-import createIsValidElements from './utils/is-valid-elements';
+import isValidElements from './utils/is-valid-elements';
 
 const sort = ( a: any, b: any, direction: SortDirection ) => {
 	if ( typeof a === 'number' && typeof b === 'number' ) {
@@ -35,8 +35,7 @@ export default {
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements:
-			field.isValid?.elements ?? true ? createIsValidElements() : false,
+		elements: field.isValid?.elements ?? true ? isValidElements : false,
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),
 } satisfies FieldType< any >;

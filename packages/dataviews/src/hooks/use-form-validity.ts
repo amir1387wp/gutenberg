@@ -195,7 +195,7 @@ function handleElementsValidationAsync< Item >(
 
 			if (
 				formField.field?.isValid.elements &&
-				! formField.field.isValid.elements.validate(
+				! formField.field.isValid.elements(
 					item,
 					formField.field,
 					result
@@ -447,7 +447,7 @@ function validateFormField< Item >(
 		Array.isArray( formField.field.elements )
 	) {
 		if (
-			! formField.field.isValid.elements.validate(
+			! formField.field.isValid.elements(
 				item,
 				formField.field,
 				formField.field.elements

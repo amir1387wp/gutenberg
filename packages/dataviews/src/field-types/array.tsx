@@ -20,7 +20,7 @@ import {
 	OPERATOR_IS_NOT_ALL,
 } from '../constants';
 import isValidRequiredArray from './utils/is-valid-required-array';
-import createIsValidElements from './utils/is-valid-elements';
+import isValidElements from './utils/is-valid-elements';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	const value = field.getValue( { item } ) || [];
@@ -84,8 +84,7 @@ export default {
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements:
-			field.isValid?.elements ?? true ? createIsValidElements() : false,
+		elements: field.isValid?.elements ?? true ? isValidElements : false,
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),
 } satisfies FieldType< any >;

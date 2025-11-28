@@ -98,13 +98,11 @@ export type NormalizedRules< Item > = {
 		| ( ( item: Item, field: NormalizedField< Item > ) => boolean );
 	elements:
 		| false
-		| {
-				validate: (
-					item: Item,
-					field: NormalizedField< Item >,
-					elements: Array< { value: any } >
-				) => boolean;
-		  };
+		| ( (
+				item: Item,
+				field: NormalizedField< Item >,
+				elements: Array< { value: any } >
+		  ) => boolean );
 	pattern:
 		| false
 		| {

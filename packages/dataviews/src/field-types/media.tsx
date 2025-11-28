@@ -3,7 +3,7 @@
  */
 import type { Field } from '../types';
 import type { FieldType } from '../types/private';
-import createIsValidElements from './utils/is-valid-elements';
+import isValidElements from './utils/is-valid-elements';
 
 export default {
 	type: 'media',
@@ -22,8 +22,7 @@ export default {
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements:
-			field.isValid?.elements ?? true ? createIsValidElements() : false,
+		elements: field.isValid?.elements ?? true ? isValidElements : false,
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),
 } satisfies FieldType< any >;

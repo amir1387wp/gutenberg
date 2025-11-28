@@ -25,7 +25,7 @@ import {
 	OPERATOR_IS_NONE,
 	OPERATOR_IS_NOT,
 } from '../constants';
-import createIsValidElements from './utils/is-valid-elements';
+import isValidElements from './utils/is-valid-elements';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	if ( field.hasElements ) {
@@ -119,8 +119,7 @@ export default {
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements:
-			field.isValid?.elements ?? true ? createIsValidElements() : false,
+		elements: field.isValid?.elements ?? true ? isValidElements : false,
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),
 } satisfies FieldType< any >;
