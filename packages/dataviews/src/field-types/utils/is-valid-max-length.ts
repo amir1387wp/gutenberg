@@ -11,18 +11,21 @@ import type { NormalizedField } from '../../types';
  * @return Validation function that returns true if valid, false if invalid
  */
 export default function createIsValidMaxLength( maxLength: number ) {
-	return function isValidMaxLength< Item >(
-		item: Item,
-		field: NormalizedField< Item >
-	): boolean {
-		const value = field.getValue( { item } );
+	return {
+		value: maxLength,
+		validate: function isValidMaxLength< Item >(
+			item: Item,
+			field: NormalizedField< Item >
+		): boolean {
+			const value = field.getValue( { item } );
 
-		// Empty values are considered valid for maxLength validation
-		// (use required validation to enforce non-empty values)
-		if ( [ undefined, '', null ].includes( value ) ) {
-			return true;
-		}
+			// Empty values are considered valid for maxLength validation
+			// (use required validation to enforce non-empty values)
+			if ( [ undefined, '', null ].includes( value ) ) {
+				return true;
+			}
 
-		return String( value ).length <= maxLength;
+			return String( value ).length <= maxLength;
+		},
 	};
 }

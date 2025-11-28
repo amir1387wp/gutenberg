@@ -58,12 +58,7 @@ export default {
 				: false,
 		maxLength:
 			field.isValid?.maxLength !== undefined
-				? {
-						value: field.isValid.maxLength,
-						validate: createIsValidMaxLength(
-							field.isValid.maxLength
-						),
-				  }
+				? createIsValidMaxLength( field.isValid.maxLength )
 				: false,
 		elements:
 			field.isValid?.elements ?? true
