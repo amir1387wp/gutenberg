@@ -92,35 +92,19 @@ export type Rules< Item > = {
 		  ) => Promise< null | string > );
 };
 
+type NormalizedRule< Item > = {
+	constraint: any;
+	validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
+};
+
 export type NormalizedRules< Item > = {
-	required?: {
-		constraint: any;
-		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
-	};
-	elements?: {
-		constraint: any;
-		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
-	};
-	pattern?: {
-		constraint: any;
-		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
-	};
-	minLength?: {
-		constraint: any;
-		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
-	};
-	maxLength?: {
-		constraint: any;
-		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
-	};
-	min?: {
-		constraint: any;
-		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
-	};
-	max?: {
-		constraint: any;
-		validate: ( item: Item, field: NormalizedField< Item > ) => boolean;
-	};
+	required?: NormalizedRule< Item >;
+	elements?: NormalizedRule< Item >;
+	pattern?: NormalizedRule< Item >;
+	minLength?: NormalizedRule< Item >;
+	maxLength?: NormalizedRule< Item >;
+	min?: NormalizedRule< Item >;
+	max?: NormalizedRule< Item >;
 	custom?:
 		| ( ( item: Item, field: NormalizedField< Item > ) => null | string )
 		| ( (
