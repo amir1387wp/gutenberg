@@ -1,3 +1,8 @@
+/**
+ * Internal dependencies
+ */
+import type { NormalizedField } from '../../types';
+
 export default function isValidRequiredForBool( constraint?: boolean ) {
 	if ( constraint === false ) {
 		return undefined;
@@ -5,7 +10,9 @@ export default function isValidRequiredForBool( constraint?: boolean ) {
 
 	return {
 		constraint,
-		validate< Item >( value: Item ) {
+		validate< Item >( item: Item, field: NormalizedField< Item > ) {
+			const value = field.getValue( { item } );
+
 			return value === true;
 		},
 	};
