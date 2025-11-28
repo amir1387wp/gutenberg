@@ -4,6 +4,7 @@
 
 ### Enhancements
 
+- Field API: move validation to the field type. [#73642](https://github.com/WordPress/gutenberg/pull/73642)
 - DataForm: add support for `min`/`max` and `minLength`/`maxLength` validation for relevant controls. [#73465](https://github.com/WordPress/gutenberg/pull/73465)
 
 ## 11.0.0 (2025-11-26)
