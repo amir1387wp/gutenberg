@@ -76,10 +76,7 @@ export default {
 		required: field.isValid?.required ? isValidRequired : false,
 		min:
 			field.isValid?.min !== undefined
-				? {
-						value: field.isValid.min,
-						validate: createIsValidMin( field.isValid.min ),
-				  }
+				? createIsValidMin( field.isValid.min )
 				: false,
 		max:
 			field.isValid?.max !== undefined

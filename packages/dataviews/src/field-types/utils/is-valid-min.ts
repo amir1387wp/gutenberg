@@ -11,18 +11,21 @@ import type { NormalizedField } from '../../types';
  * @return Validation function that returns true if valid, false if invalid
  */
 export default function createIsValidMin( minValue: number ) {
-	return function isValidMin< Item >(
-		item: Item,
-		field: NormalizedField< Item >
-	): boolean {
-		const value = field.getValue( { item } );
+	return {
+		value: minValue,
+		validate: function isValidMin< Item >(
+			item: Item,
+			field: NormalizedField< Item >
+		): boolean {
+			const value = field.getValue( { item } );
 
-		// Empty values are considered valid for min validation
-		// (use required validation to enforce non-empty values)
-		if ( [ undefined, '', null ].includes( value ) ) {
-			return true;
-		}
+			// Empty values are considered valid for min validation
+			// (use required validation to enforce non-empty values)
+			if ( [ undefined, '', null ].includes( value ) ) {
+				return true;
+			}
 
-		return Number( value ) >= minValue;
+			return Number( value ) >= minValue;
+		},
 	};
 }
