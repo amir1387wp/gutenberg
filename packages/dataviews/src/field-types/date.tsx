@@ -60,7 +60,7 @@ function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	// There're no runtime paths where this render function is called with a non-date field,
 	// but TypeScript is unable to infer this, hence the type assertion.
 	let format: Required< FormatDate >;
-	if ( field.type === 'date' ) {
+	if ( field.type !== 'date' ) {
 		format = getFormat( {} as Field< any > );
 	} else {
 		format = field.format as Required< FormatDate >;
