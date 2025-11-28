@@ -27,7 +27,7 @@ function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	return value.join( ', ' );
 }
 
-function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
+function isValidCustom< Item >( item: Item, field: NormalizedField< Item > ) {
 	const value = field.getValue( { item } );
 
 	if (
@@ -85,6 +85,6 @@ export default {
 		minLength: false,
 		maxLength: false,
 		elements: isValidElements( field.isValid?.elements ?? true ),
-		custom: field.isValid?.custom ?? isValidCustomFn,
+		custom: field.isValid?.custom ?? isValidCustom,
 	} ),
 } satisfies FieldType< any >;

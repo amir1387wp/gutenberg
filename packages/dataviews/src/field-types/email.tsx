@@ -32,7 +32,7 @@ import isValidElements from './utils/is-valid-elements';
 const emailRegex =
 	/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
-function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
+function isValidCustom< Item >( item: Item, field: NormalizedField< Item > ) {
 	const value = field.getValue( { item } );
 
 	if (
@@ -74,6 +74,6 @@ export default {
 		minLength: isValidMinLength( field.isValid?.minLength ),
 		maxLength: isValidMaxLength( field.isValid?.maxLength ),
 		elements: isValidElements( field.isValid?.elements ?? true ),
-		custom: field.isValid?.custom ?? isValidCustomFn,
+		custom: field.isValid?.custom ?? isValidCustom,
 	} ),
 } satisfies FieldType< any >;

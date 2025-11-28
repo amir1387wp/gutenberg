@@ -28,7 +28,7 @@ import isValidMin from './utils/is-valid-min';
 import isValidMax from './utils/is-valid-max';
 import isValidElements from './utils/is-valid-elements';
 
-function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
+function isValidCustom< Item >( item: Item, field: NormalizedField< Item > ) {
 	const value = field.getValue( { item } );
 	if (
 		! [ undefined, '', null ].includes( value ) &&
@@ -80,6 +80,6 @@ export default {
 		minLength: false,
 		maxLength: false,
 		elements: isValidElements( field.isValid?.elements ?? true ),
-		custom: field.isValid?.custom ?? isValidCustomFn,
+		custom: field.isValid?.custom ?? isValidCustom,
 	} ),
 } satisfies FieldType< any >;
