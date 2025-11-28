@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Enhancements
+
+-   Unify padding using for DataViews, Modals and other container components. ([#73334](https://github.com/WordPress/gutenberg/pull/73334)
+
 ## 30.9.0 (2025-11-26)
 
 ### Bug Fixes
