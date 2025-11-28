@@ -7,13 +7,17 @@ import type { NormalizedField } from '../../types';
  * Factory function that creates a min validation function.
  * Returns a validation function that checks if a value meets the minimum requirement.
  *
- * @param minValue The minimum value allowed
+ * @param constraint The minimum value allowed
  * @return Validation function that returns true if valid, false if invalid
  */
-export default function createIsValidMin( minValue: number ) {
+export default function createIsValidMin( constraint?: number ) {
+	if ( constraint === undefined ) {
+		return false;
+	}
+
 	return {
-		value: minValue,
-		validate: function isValidMin< Item >(
+		constraint,
+		validate< Item >(
 			item: Item,
 			field: NormalizedField< Item >
 		): boolean {
@@ -25,7 +29,7 @@ export default function createIsValidMin( minValue: number ) {
 				return true;
 			}
 
-			return Number( value ) >= minValue;
+			return Number( value ) >= constraint;
 		},
 	};
 }

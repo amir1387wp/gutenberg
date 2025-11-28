@@ -95,18 +95,27 @@ export type Rules< Item > = {
 export type NormalizedRules< Item > = {
 	required:
 		| false
-		| ( ( item: Item, field: NormalizedField< Item > ) => boolean );
+		| {
+				constraint: any;
+				validate: (
+					item: Item,
+					field: NormalizedField< Item >
+				) => boolean;
+		  };
 	elements:
 		| false
-		| ( (
-				item: Item,
-				field: NormalizedField< Item >,
-				elements: Array< { value: any } >
-		  ) => boolean );
+		| {
+				constraint: any;
+				validate: (
+					item: Item,
+					field: NormalizedField< Item >,
+					elements: Array< { value: any } >
+				) => boolean;
+		  };
 	pattern:
 		| false
 		| {
-				pattern: string;
+				constraint: any;
 				validate: (
 					item: Item,
 					field: NormalizedField< Item >
@@ -115,7 +124,7 @@ export type NormalizedRules< Item > = {
 	minLength:
 		| false
 		| {
-				value: number;
+				constraint: any;
 				validate: (
 					item: Item,
 					field: NormalizedField< Item >
@@ -124,7 +133,7 @@ export type NormalizedRules< Item > = {
 	maxLength:
 		| false
 		| {
-				value: number;
+				constraint: any;
 				validate: (
 					item: Item,
 					field: NormalizedField< Item >
@@ -133,7 +142,7 @@ export type NormalizedRules< Item > = {
 	min:
 		| false
 		| {
-				value: number;
+				constraint: any;
 				validate: (
 					item: Item,
 					field: NormalizedField< Item >
@@ -142,7 +151,7 @@ export type NormalizedRules< Item > = {
 	max:
 		| false
 		| {
-				value: number;
+				constraint: any;
 				validate: (
 					item: Item,
 					field: NormalizedField< Item >

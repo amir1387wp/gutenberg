@@ -17,9 +17,9 @@ import {
 import render from './utils/render-default';
 import sort from './utils/sort-text';
 import isValidRequired from './utils/is-valid-required';
-import createIsValidMinLength from './utils/is-valid-min-length';
-import createIsValidMaxLength from './utils/is-valid-max-length';
-import createIsValidPattern from './utils/is-valid-pattern';
+import isValidMinLength from './utils/is-valid-min-length';
+import isValidMaxLength from './utils/is-valid-max-length';
+import isValidPattern from './utils/is-valid-pattern';
 import isValidElements from './utils/is-valid-elements';
 
 export default {
@@ -44,22 +44,13 @@ export default {
 	],
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
-		required: field.isValid?.required ? isValidRequired : false,
+		required: isValidRequired( field.isValid?.required ),
 		min: false,
 		max: false,
-		pattern:
-			field.isValid?.pattern !== undefined
-				? createIsValidPattern( field.isValid.pattern )
-				: false,
-		minLength:
-			field.isValid?.minLength !== undefined
-				? createIsValidMinLength( field.isValid.minLength )
-				: false,
-		maxLength:
-			field.isValid?.maxLength !== undefined
-				? createIsValidMaxLength( field.isValid.maxLength )
-				: false,
-		elements: field.isValid?.elements ?? true ? isValidElements : false,
+		pattern: isValidPattern( field.isValid?.pattern ),
+		minLength: isValidMinLength( field.isValid?.minLength ),
+		maxLength: isValidMaxLength( field.isValid?.maxLength ),
+		elements: isValidElements( field.isValid?.elements ?? true ),
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),
 } satisfies FieldType< any >;

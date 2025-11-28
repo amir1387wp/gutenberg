@@ -28,8 +28,8 @@ import {
 import RenderFromElements from './utils/render-from-elements';
 import sort from './utils/sort-number';
 import isValidRequired from './utils/is-valid-required';
-import createIsValidMin from './utils/is-valid-min';
-import createIsValidMax from './utils/is-valid-max';
+import isValidMin from './utils/is-valid-min';
+import isValidMax from './utils/is-valid-max';
 import isValidElements from './utils/is-valid-elements';
 
 function isEmpty( value: unknown ): value is '' | undefined | null {
@@ -92,19 +92,13 @@ export default {
 	],
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
-		required: field.isValid?.required ? isValidRequired : false,
-		min:
-			field.isValid?.min !== undefined
-				? createIsValidMin( field.isValid.min )
-				: false,
-		max:
-			field.isValid?.max !== undefined
-				? createIsValidMax( field.isValid.max )
-				: false,
+		required: isValidRequired( field.isValid?.required ),
+		min: isValidMin( field.isValid?.min ),
+		max: isValidMax( field.isValid?.max ),
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements: field.isValid?.elements ?? true ? isValidElements : false,
+		elements: isValidElements( field.isValid?.elements ?? true ),
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),
 } satisfies FieldType< any >;

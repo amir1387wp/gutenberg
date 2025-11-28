@@ -7,13 +7,17 @@ import type { NormalizedField } from '../../types';
  * Factory function that creates a minLength validation function.
  * Returns a validation function that checks if a value meets the minimum length requirement.
  *
- * @param minLength The minimum length allowed
+ * @param constraint The minimum length allowed
  * @return Validation function that returns true if valid, false if invalid
  */
-export default function createIsValidMinLength( minLength: number ) {
+export default function createIsValidMinLength( constraint?: number ) {
+	if ( constraint === undefined ) {
+		return false;
+	}
+
 	return {
-		value: minLength,
-		validate: function isValidMinLength< Item >(
+		constraint,
+		validate< Item >(
 			item: Item,
 			field: NormalizedField< Item >
 		): boolean {
@@ -25,7 +29,7 @@ export default function createIsValidMinLength( minLength: number ) {
 				return true;
 			}
 
-			return String( value ).length >= minLength;
+			return String( value ).length >= constraint;
 		},
 	};
 }

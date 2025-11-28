@@ -7,13 +7,17 @@ import type { NormalizedField } from '../../types';
  * Factory function that creates a maxLength validation function.
  * Returns a validation function that checks if a value meets the maximum length requirement.
  *
- * @param maxLength The maximum length allowed
+ * @param constraint The maximum length allowed
  * @return Validation function that returns true if valid, false if invalid
  */
-export default function createIsValidMaxLength( maxLength: number ) {
+export default function createIsValidMaxLength( constraint?: number ) {
+	if ( constraint === undefined ) {
+		return false;
+	}
+
 	return {
-		value: maxLength,
-		validate: function isValidMaxLength< Item >(
+		constraint,
+		validate< Item >(
 			item: Item,
 			field: NormalizedField< Item >
 		): boolean {
@@ -25,7 +29,7 @@ export default function createIsValidMaxLength( maxLength: number ) {
 				return true;
 			}
 
-			return String( value ).length <= maxLength;
+			return String( value ).length <= constraint;
 		},
 	};
 }

@@ -16,6 +16,7 @@ import type { FieldType } from '../types/private';
 import RenderFromElements from './utils/render-from-elements';
 import { OPERATOR_IS, OPERATOR_IS_NOT } from '../constants';
 import isValidElements from './utils/is-valid-elements';
+import isValidRequiredForBool from './utils/is-valid-required-for-bool';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	if ( field.hasElements ) {
@@ -31,10 +32,6 @@ function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	}
 
 	return null;
-}
-
-function isValidRequiredFn( value: any ) {
-	return value === true;
 }
 
 function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
@@ -73,13 +70,13 @@ export default {
 	Edit: 'checkbox',
 	sort,
 	getIsValid: ( field: Field< any > ) => ( {
-		required: field?.isValid?.required ? isValidRequiredFn : false,
+		required: isValidRequiredForBool( field.isValid?.required ),
 		min: false,
 		max: false,
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements: field.isValid?.elements ?? true ? isValidElements : false,
+		elements: isValidElements( field.isValid?.elements ?? true ),
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),
 	enableSorting: true,

@@ -195,7 +195,7 @@ function handleElementsValidationAsync< Item >(
 
 			if (
 				formField.field?.isValid.elements &&
-				! formField.field.isValid.elements(
+				! formField.field.isValid.elements.validate(
 					item,
 					formField.field,
 					result
@@ -359,84 +359,78 @@ function validateFormField< Item >(
 	promiseHandler: PromiseHandler< Item >
 ): FieldValidity | undefined {
 	// Validate the field: isValid.required
-	if ( typeof formField.field?.isValid.required === 'function' ) {
-		if ( ! formField.field.isValid.required( item, formField.field ) ) {
-			return {
-				required: { type: 'invalid' },
-			};
-		}
+	if (
+		formField.field?.isValid.required &&
+		! formField.field.isValid.required.validate( item, formField.field )
+	) {
+		return {
+			required: { type: 'invalid' },
+		};
 	}
 
 	// Validate the field: isValid.pattern
-	if ( formField.field?.isValid.pattern ) {
-		if (
-			! formField.field.isValid.pattern.validate( item, formField.field )
-		) {
-			return {
-				pattern: {
-					type: 'invalid',
-					message: __( 'Value does not match the required pattern.' ),
-				},
-			};
-		}
+	if (
+		formField.field?.isValid.pattern &&
+		! formField.field.isValid.pattern.validate( item, formField.field )
+	) {
+		return {
+			pattern: {
+				type: 'invalid',
+				message: __( 'Value does not match the required pattern.' ),
+			},
+		};
 	}
 
 	// Validate the field: isValid.min
-	if ( formField.field?.isValid.min ) {
-		if ( ! formField.field.isValid.min.validate( item, formField.field ) ) {
-			return {
-				min: {
-					type: 'invalid',
-					message: __( 'Value is below the minimum.' ),
-				},
-			};
-		}
+	if (
+		formField.field?.isValid.min &&
+		! formField.field.isValid.min.validate( item, formField.field )
+	) {
+		return {
+			min: {
+				type: 'invalid',
+				message: __( 'Value is below the minimum.' ),
+			},
+		};
 	}
 
 	// Validate the field: isValid.max
-	if ( formField.field?.isValid.max ) {
-		if ( ! formField.field.isValid.max.validate( item, formField.field ) ) {
-			return {
-				max: {
-					type: 'invalid',
-					message: __( 'Value is above the maximum.' ),
-				},
-			};
-		}
+	if (
+		formField.field?.isValid.max &&
+		! formField.field.isValid.max.validate( item, formField.field )
+	) {
+		return {
+			max: {
+				type: 'invalid',
+				message: __( 'Value is above the maximum.' ),
+			},
+		};
 	}
 
 	// Validate the field: isValid.minLength
-	if ( formField.field?.isValid.minLength ) {
-		if (
-			! formField.field.isValid.minLength.validate(
-				item,
-				formField.field
-			)
-		) {
-			return {
-				minLength: {
-					type: 'invalid',
-					message: __( 'Value is too short.' ),
-				},
-			};
-		}
+	if (
+		formField.field?.isValid.minLength &&
+		! formField.field.isValid.minLength.validate( item, formField.field )
+	) {
+		return {
+			minLength: {
+				type: 'invalid',
+				message: __( 'Value is too short.' ),
+			},
+		};
 	}
 
 	// Validate the field: isValid.maxLength
-	if ( formField.field?.isValid.maxLength ) {
-		if (
-			! formField.field.isValid.maxLength.validate(
-				item,
-				formField.field
-			)
-		) {
-			return {
-				maxLength: {
-					type: 'invalid',
-					message: __( 'Value is too long.' ),
-				},
-			};
-		}
+	if (
+		formField.field?.isValid.maxLength &&
+		! formField.field.isValid.maxLength.validate( item, formField.field )
+	) {
+		return {
+			maxLength: {
+				type: 'invalid',
+				message: __( 'Value is too long.' ),
+			},
+		};
 	}
 
 	// Validate the field: isValid.elements (static)
@@ -444,22 +438,19 @@ function validateFormField< Item >(
 		formField.field?.isValid.elements &&
 		formField.field.hasElements &&
 		! formField.field.getElements &&
-		Array.isArray( formField.field.elements )
+		Array.isArray( formField.field.elements ) &&
+		! formField.field.isValid.elements.validate(
+			item,
+			formField.field,
+			formField.field.elements
+		)
 	) {
-		if (
-			! formField.field.isValid.elements(
-				item,
-				formField.field,
-				formField.field.elements
-			)
-		) {
-			return {
-				elements: {
-					type: 'invalid',
-					message: __( 'Value must be one of the elements.' ),
-				},
-			};
-		}
+		return {
+			elements: {
+				type: 'invalid',
+				message: __( 'Value must be one of the elements.' ),
+			},
+		};
 	}
 
 	// Validate the field: isValid.elements (async)

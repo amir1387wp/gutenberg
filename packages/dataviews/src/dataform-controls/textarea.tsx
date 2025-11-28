@@ -42,10 +42,10 @@ export default function Textarea< Item >( {
 			onChange={ onChangeControl }
 			rows={ rows }
 			minLength={
-				isValid?.minLength ? isValid.minLength.value : undefined
+				isValid?.minLength ? isValid.minLength.constraint : undefined
 			}
 			maxLength={
-				isValid?.maxLength ? isValid.maxLength.value : undefined
+				isValid?.maxLength ? isValid.maxLength.constraint : undefined
 			}
 			__next40pxDefaultSize
 			__nextHasNoMarginBottom

@@ -29,13 +29,13 @@ export default {
 	validOperators: ALL_OPERATORS,
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
-		required: field.isValid?.required ? isValidRequired : false,
+		required: isValidRequired( field.isValid?.required ),
 		min: false,
 		max: false,
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements: field.isValid?.elements ?? true ? isValidElements : false,
+		elements: isValidElements( field.isValid?.elements ?? true ),
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),
 } satisfies FieldType< any >;

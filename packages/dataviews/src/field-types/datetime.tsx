@@ -16,6 +16,7 @@ import {
 	OPERATOR_IN_THE_PAST,
 	OPERATOR_OVER,
 } from '../constants';
+import isValidRequiredNoop from './utils/is-valid-required-noop';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	if ( field.elements ) {
@@ -71,13 +72,13 @@ export default {
 	],
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
-		required: field.isValid?.required ? () => true : false,
+		required: isValidRequiredNoop( field.isValid?.required ),
 		min: false,
 		max: false,
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements: field.isValid?.elements ?? true ? isValidElements : false,
+		elements: isValidElements( field.isValid?.elements ?? true ),
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),
 } satisfies FieldType< any >;

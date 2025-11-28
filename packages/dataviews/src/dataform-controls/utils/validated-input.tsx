@@ -67,12 +67,14 @@ export default function ValidatedText< Item >( {
 			type={ type }
 			prefix={ prefix }
 			suffix={ suffix }
-			pattern={ isValid?.pattern ? isValid.pattern.pattern : undefined }
+			pattern={
+				isValid?.pattern ? isValid.pattern.constraint : undefined
+			}
 			minLength={
-				isValid?.minLength ? isValid.minLength.value : undefined
+				isValid?.minLength ? isValid.minLength.constraint : undefined
 			}
 			maxLength={
-				isValid?.maxLength ? isValid.maxLength.value : undefined
+				isValid?.maxLength ? isValid.maxLength.constraint : undefined
 			}
 			__next40pxDefaultSize
 		/>

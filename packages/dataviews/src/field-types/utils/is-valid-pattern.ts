@@ -8,22 +8,26 @@ import type { NormalizedField } from '../../types';
  * Compiles the RegExp during normalization and returns both the validation function
  * and a flag indicating whether the regex pattern itself is valid.
  *
- * @param pattern The regex pattern string
+ * @param constraint The regex pattern string
  * @return Object with isValidRegex flag and validate function
  */
-export default function createIsValidPattern( pattern: string ) {
+export default function createIsValidPattern( constraint?: string ) {
+	if ( constraint === undefined ) {
+		return false;
+	}
+
 	let regex: RegExp | null = null;
 	let isValidRegex = true;
 
 	try {
-		regex = new RegExp( pattern );
+		regex = new RegExp( constraint );
 	} catch ( error ) {
 		isValidRegex = false;
 	}
 
 	return {
-		pattern,
-		validate: function isValidPattern< Item >(
+		constraint,
+		validate< Item >(
 			item: Item,
 			field: NormalizedField< Item >
 		): boolean {
