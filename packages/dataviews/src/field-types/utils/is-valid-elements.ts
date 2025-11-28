@@ -9,15 +9,19 @@ import type { NormalizedField } from '../../types';
  * allowing it to work for both sync and async validation paths.
  */
 export default function createIsValidElements() {
-	return function isValidElements< Item >(
-		item: Item,
-		field: NormalizedField< Item >,
-		elements: Array< { value: any } >
-	): boolean {
-		const value = field.getValue( { item } );
-		const validValues = elements.map( ( el ) => el.value );
+	return {
+		validate: function isValidElements< Item >(
+			item: Item,
+			field: NormalizedField< Item >,
+			elements: Array< { value: any } >
+		): boolean {
+			const value = field.getValue( { item } );
+			const validValues = elements.map( ( el ) => el.value );
 
-		// Covers both array and non-array values.
-		return [].concat( value ).every( ( v ) => validValues.includes( v ) );
+			// Covers both array and non-array values.
+			return []
+				.concat( value )
+				.every( ( v ) => validValues.includes( v ) );
+		},
 	};
 }

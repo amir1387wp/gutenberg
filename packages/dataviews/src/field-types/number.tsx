@@ -111,9 +111,7 @@ export default {
 		minLength: false,
 		maxLength: false,
 		elements:
-			field.isValid?.elements ?? true
-				? { validate: createIsValidElements() }
-				: false,
+			field.isValid?.elements ?? true ? createIsValidElements() : false,
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),
 } satisfies FieldType< any >;
