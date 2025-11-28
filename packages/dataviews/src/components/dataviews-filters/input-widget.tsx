@@ -70,6 +70,7 @@ export default function InputWidget( {
 					pattern: false,
 					minLength: false,
 					maxLength: false,
+					elements: false,
 					custom: () => null,
 				} satisfies NormalizedRules< any >,
 				// Configure getValue/setValue as if Item was a plain object.

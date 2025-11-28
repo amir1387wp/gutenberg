@@ -8,6 +8,7 @@ import isValidRequired from './utils/is-valid-required';
 import createIsValidMinLength from './utils/is-valid-min-length';
 import createIsValidMaxLength from './utils/is-valid-max-length';
 import createIsValidPattern from './utils/is-valid-pattern';
+import createIsValidElements from './utils/is-valid-elements';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	return field.hasElements ? (
@@ -56,7 +57,10 @@ export default {
 						),
 				  }
 				: false,
-		elements: field.isValid?.elements ?? true,
+		elements:
+			field.isValid?.elements ?? true
+				? { validate: createIsValidElements() }
+				: false,
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),
 } satisfies FieldType< any >;

@@ -526,7 +526,7 @@ describe( 'useFormValidity', () => {
 			expect( validity?.tags ).toEqual( {
 				elements: {
 					type: 'invalid',
-					message: 'Value must be an array.',
+					message: 'Value must be one of the elements.',
 				},
 			} );
 			expect( isValid ).toBe( false );

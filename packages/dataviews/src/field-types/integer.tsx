@@ -26,6 +26,7 @@ import sort from './utils/sort-number';
 import isValidRequired from './utils/is-valid-required';
 import createIsValidMin from './utils/is-valid-min';
 import createIsValidMax from './utils/is-valid-max';
+import createIsValidElements from './utils/is-valid-elements';
 
 function isValidCustomFn< Item >( item: Item, field: NormalizedField< Item > ) {
 	const value = field.getValue( { item } );
@@ -90,7 +91,10 @@ export default {
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements: field.isValid?.elements ?? true,
+		elements:
+			field.isValid?.elements ?? true
+				? { validate: createIsValidElements() }
+				: false,
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),
 } satisfies FieldType< any >;

@@ -193,57 +193,13 @@ function handleElementsValidationAsync< Item >(
 				return;
 			}
 
-			const validValues = result.map( ( el ) => el.value );
 			if (
-				!! formField.field &&
-				formField.field.type !== 'array' &&
-				! validValues.includes( formField.field.getValue( { item } ) )
-			) {
-				setFormValidity( ( prev ) => {
-					const newFormValidity = setValidityAtPath(
-						prev,
-						{
-							elements: {
-								type: 'invalid',
-								message: __(
-									'Value must be one of the elements.'
-								),
-							},
-						},
-						[ ...path, formField.id ]
-					);
-					return newFormValidity;
-				} );
-				return;
-			}
-
-			if (
-				!! formField.field &&
-				formField.field.type === 'array' &&
-				! Array.isArray( formField.field.getValue( { item } ) )
-			) {
-				setFormValidity( ( prev ) => {
-					const newFormValidity = setValidityAtPath(
-						prev,
-						{
-							elements: {
-								type: 'invalid',
-								message: __( 'Value must be an array.' ),
-							},
-						},
-						[ ...path, formField.id ]
-					);
-					return newFormValidity;
-				} );
-				return;
-			}
-
-			if (
-				!! formField.field &&
-				formField.field.type === 'array' &&
-				formField.field
-					.getValue( { item } )
-					.some( ( v: any ) => ! validValues.includes( v ) )
+				formField.field?.isValid.elements &&
+				! formField.field.isValid.elements.validate(
+					item,
+					formField.field,
+					result
+				)
 			) {
 				setFormValidity( ( prev ) => {
 					const newFormValidity = setValidityAtPath(
@@ -495,38 +451,17 @@ function validateFormField< Item >(
 
 	// Validate the field: isValid.elements (static)
 	if (
-		!! formField.field &&
-		formField.field.isValid.elements &&
+		formField.field?.isValid.elements &&
 		formField.field.hasElements &&
 		! formField.field.getElements &&
 		Array.isArray( formField.field.elements )
 	) {
-		const value = formField.field.getValue( { item } );
-		const validValues = formField.field.elements.map( ( el ) => el.value );
-
 		if (
-			formField.field.type !== 'array' &&
-			! validValues.includes( value )
-		) {
-			return {
-				elements: {
-					type: 'invalid',
-					message: __( 'Value must be one of the elements.' ),
-				},
-			};
-		}
-
-		if ( formField.field.type === 'array' && ! Array.isArray( value ) ) {
-			return {
-				elements: {
-					type: 'invalid',
-					message: __( 'Value must be an array.' ),
-				},
-			};
-		}
-		if (
-			formField.field.type === 'array' &&
-			value.some( ( v: any ) => ! validValues.includes( v ) )
+			! formField.field.isValid.elements.validate(
+				item,
+				formField.field,
+				formField.field.elements
+			)
 		) {
 			return {
 				elements: {

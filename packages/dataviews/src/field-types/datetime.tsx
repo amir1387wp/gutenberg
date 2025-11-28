@@ -5,6 +5,7 @@ import type { DataViewRenderFieldProps, Field, SortDirection } from '../types';
 import type { FieldType } from '../types/private';
 import RenderFromElements from './utils/render-from-elements';
 import parseDateTime from './utils/parse-date-time';
+import createIsValidElements from './utils/is-valid-elements';
 import {
 	OPERATOR_ON,
 	OPERATOR_NOT_ON,
@@ -76,7 +77,10 @@ export default {
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements: field.isValid?.elements ?? true,
+		elements:
+			field.isValid?.elements ?? true
+				? { validate: createIsValidElements() }
+				: false,
 		custom: field.isValid?.custom ?? ( () => null ),
 	} ),
 } satisfies FieldType< any >;

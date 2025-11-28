@@ -96,7 +96,15 @@ export type NormalizedRules< Item > = {
 	required:
 		| false
 		| ( ( item: Item, field: NormalizedField< Item > ) => boolean );
-	elements?: boolean;
+	elements:
+		| false
+		| {
+				validate: (
+					item: Item,
+					field: NormalizedField< Item >,
+					elements: Array< { value: any } >
+				) => boolean;
+		  };
 	pattern:
 		| false
 		| {

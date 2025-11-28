@@ -30,6 +30,7 @@ import sort from './utils/sort-number';
 import isValidRequired from './utils/is-valid-required';
 import createIsValidMin from './utils/is-valid-min';
 import createIsValidMax from './utils/is-valid-max';
+import createIsValidElements from './utils/is-valid-elements';
 
 function isEmpty( value: unknown ): value is '' | undefined | null {
 	return value === '' || value === undefined || value === null;
@@ -109,7 +110,10 @@ export default {
 		pattern: false,
 		minLength: false,
 		maxLength: false,
-		elements: field.isValid?.elements ?? true,
+		elements:
+			field.isValid?.elements ?? true
+				? { validate: createIsValidElements() }
+				: false,
 		custom: field.isValid?.custom ?? isValidCustomFn,
 	} ),
 } satisfies FieldType< any >;
