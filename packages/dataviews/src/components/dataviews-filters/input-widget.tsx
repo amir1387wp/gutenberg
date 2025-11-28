@@ -63,16 +63,7 @@ export default function InputWidget( {
 			return {
 				...currentField,
 				// Deactivate validation for filters.
-				isValid: {
-					required: false,
-					min: false,
-					max: false,
-					pattern: false,
-					minLength: false,
-					maxLength: false,
-					elements: false,
-					custom: () => null,
-				} satisfies NormalizedRules< any >,
+				isValid: {} satisfies NormalizedRules< any >,
 				// Configure getValue/setValue as if Item was a plain object.
 				getValue: ( { item }: { item: any } ) =>
 					item[ currentField.id ],
