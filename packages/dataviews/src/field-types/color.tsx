@@ -26,7 +26,7 @@ import {
 	OPERATOR_IS_NOT,
 } from '../constants';
 import isValidElements from './utils/is-valid-elements';
-import isValidRequiredNoop from './utils/is-valid-required-noop';
+import isValidRequired from './utils/is-valid-required';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	if ( field.hasElements ) {
@@ -114,7 +114,7 @@ export default {
 	],
 	getFormat: () => ( {} ),
 	getIsValid: ( field: Field< any > ) => ( {
-		required: isValidRequiredNoop( field.isValid?.required ),
+		required: isValidRequired( field.isValid?.required ),
 		min: false,
 		max: false,
 		pattern: false,
