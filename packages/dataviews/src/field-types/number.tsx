@@ -99,10 +99,7 @@ export default {
 				: false,
 		max:
 			field.isValid?.max !== undefined
-				? {
-						value: field.isValid.max,
-						validate: createIsValidMax( field.isValid.max ),
-				  }
+				? createIsValidMax( field.isValid.max )
 				: false,
 		pattern: false,
 		minLength: false,
