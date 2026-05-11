@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه مشخصات</title>
+</head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* برای اینکه وسط‌چین کردن عمودی کار کند */
+            margin: 0;
+            background-color: #f0f0f0; /* رنگ پس‌زمینه برای بهتر دیده شدن */
+        }
+        table {
+            border-collapse: collapse; /* برای حذف فاصله بین حاشیه‌ها */
+            width: 50%; /* عرض جدول */
+            border: 2px solid #4CAF50; /* حاشیه سبز */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* سایه برای جلوه بهتر */
+            background-color: white; /* پس‌زمینه سفید برای جدول */
+        }
+        td {
+            padding: 15px; /* فاصله داخلی سلول‌ها */
+            text-align: center; /* متن وسط‌چین */
+            border: 1px solid #ddd; /* حاشیه خاکستری روشن برای سلول‌ها */
+            font-family: 'B Nazanin', Tahoma, sans-serif; /* فونت فارسی */
+            color: #333; /* رنگ متن */
+        }
+        h4 {
+            margin: 0; /* حذف حاشیه پیش‌فرض h4 */
+            font-size: 1.1em; /* اندازه فونت */
+            color: #006400; /* رنگ سبز تیره برای عنوان */
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* رنگ پس‌زمینه برای ردیف‌های زوج */
+        }
+        tr:hover {
+            background-color: #ddd; /* تغییر رنگ پس‌زمینه هنگام هاور */
+        }
+    </style>
+<body>
+    <table border="1" >
+        <tr>
+            <td><h4>نام : محمد دولتی     </h4></td>
+        </tr>
+        <tr>
+            <td><h4>شماره تماس : 09123585815</h4></td>
+        </tr>
+        <tr>
+            <td><h4>شماره تماس : 09363585815</h4></td>
+        </tr>
+    </table>
+
+    
+</body>
+</html>
